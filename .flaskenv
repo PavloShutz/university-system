@@ -1,0 +1,2 @@
+FLASK_APP=university_system
+FLASK_DEBUG=1
