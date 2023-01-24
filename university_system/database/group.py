@@ -3,7 +3,9 @@ from sqlalchemy import Column, Integer, String
 from .db_model import base
 
 
-class Groups(base):
+class Group(base):
+    """Group of students in university class."""
+
     __tablename__ = 'groups'
 
     id = Column(Integer, primary_key=True)

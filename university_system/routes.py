@@ -1,60 +1,53 @@
-from flask import render_template, request, redirect
+from typing import Union
+
+from flask import render_template, request, redirect, Response
 
 from . import app
-from .database.db_model import session
-from .database.group import Groups
-from .database.student import Student
+from .business_logic import (
+    _get_student_data,
+    _add_new_student,
+    _get_available_groups,
+    _create_new_group,
+    _get_available_names_of_groups,
+    _get_group_data,
+    _get_students_from_group
+)
 
 
 @app.route('/')
-def index():
+def index() -> str:
+    """Main page."""
     return render_template("index.html")
 
 
-@app.route('/group', methods=('GET', 'POST'))
-def group():
-    all_data = session.query(Groups).all()
-    all_data = [i.group_name for i in all_data]
+@app.route('/add_new_group', methods=('GET', 'POST'))
+def add_new_group() -> Union[str, Response]:
+    """Page to create and watch another groups."""
     if request.method == 'POST':
         group_name = request.form.get('group_name')
-        if group_name != "":
-            group_to_add = Groups(group_name)
-            session.add(group_to_add)
-            session.commit()
-            return redirect("group")
+        _create_new_group(group_name)
+        return redirect("add_new_group")
     title = 'Add group'
-    return render_template('group_management.html', title=title, all_groups=all_data)
+    return render_template('group_management.html', title=title, all_groups=_get_available_names_of_groups())
 
 
-@app.route("/group_list/<g_name>")
-def group_list(g_name):
-    gr_id = session.query(Groups).where(Groups.group_name == g_name).first().id
-    group_name = session.query(Groups).where(Groups.group_name == g_name).first().group_name
-    students_in_group = session.query(Student).where(Student.group == gr_id).all()
-    return render_template("group_list.html", group_name=group_name, group=students_in_group, enumerate=enumerate)
-
-
-def _get_student_data() -> tuple:
-    name = request.form.get("name")
-    surname = request.form.get("surname")
-    age = request.form.get("age")
-    address = request.form.get("address")
-    group_id = request.form.get("group-id-from-name")
-    return name, surname, age, address, group_id
+@app.route("/group_list/<group_name>")
+def show_table_of_students_in_group(group_name) -> str:
+    """Show page with table of students in group."""
+    return render_template(
+        "group_list.html",
+        group_name=_get_group_data(group_name).group_name,
+        all_students_in_group=_get_students_from_group(group_name),
+        enumerate=enumerate
+    )
 
 
 @app.route("/add_student", methods=("GET", "POST"))
-def add_student():
+def add_student_to_group() -> Union[str, Response]:
+    """Render template with form to add new students."""
     if request.method == 'POST':
-        name, surname, age, address, group_id = _get_student_data()
-        if all((name, surname, age, address, group_id)):
-            student = Student(
-                surname=surname, name=name,
-                age=age, address=address, group=group_id
-            )
-            session.add(student)
-            session.commit()
+        name, surname, age, address, group_id = _get_student_data(request)
+        _add_new_student(name, surname, age, address, group_id)
         return redirect("add_student")
     title = "Add student"
-    available_groups = [gr for gr in session.query(Groups).all()]
-    return render_template("add_student.html", title=title, available_groups=available_groups)
+    return render_template("add_student.html", title=title, available_groups_to_join=_get_available_groups())

@@ -17,7 +17,7 @@
             <input name="address" type="text" class="form-control" id="address" placeholder="Address"><br>
             <select name="group-id-from-name" class="form-select">
                 <option  selected value="">Available groups</option>
-                {% for group in available_groups %}
+                {% for group in available_groups_to_join %}
                     <option value="{{ group.id }}">{{ group.group_name }}</option>
                 {% endfor %}
             </select>

@@ -13,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for index, student in enumerate(group, 1) %}
+            {% for index, student in enumerate(all_students_in_group, 1) %}
                 <tr>
                     <th scope="row">{{ index }}</th>
                     <td>{{ student.surname}} {{ student.name }}</td>

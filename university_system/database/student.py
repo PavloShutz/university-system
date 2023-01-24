@@ -4,6 +4,8 @@ from .db_model import base
 
 
 class Student(base):
+    """Student in university."""
+
     __tablename__ = 'student'
     id = Column(Integer, primary_key=True)
     surname = Column(String)
