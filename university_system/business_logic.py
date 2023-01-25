@@ -7,7 +7,7 @@ from .database.student import Student
 from .database.group import Group
 
 
-def _get_student_data(request: Request) -> tuple:
+def _get_student_data_from_form(request: Request) -> tuple:
     """Get form data about new student."""
     name = request.form.get("name")
     surname = request.form.get("surname")
@@ -41,16 +41,11 @@ def _get_available_groups() -> Iterable[list[Group]]:
     return [group for group in session.query(Group).all()]
 
 
-def _get_available_names_of_groups() -> Iterable[list[str]]:
-    """Return all available names of groups to show."""
-    return [group.group_name for group in session.query(Group).all()]
-
-
-def _get_group_data(group_name: str):
+def _get_data_about_group(group_name: str):
     """Get group data from db by group name."""
     return session.query(Group).where(Group.group_name == group_name).first()
 
 
 def _get_students_from_group(group_name: str):
     """Get students from db by group name."""
-    return session.query(Student).where(Student.group == _get_group_data(group_name).id).all()
+    return session.query(Student).where(Student.group == _get_data_about_group(group_name).id).all()

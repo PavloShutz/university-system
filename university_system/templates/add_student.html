@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <form class="form-group row" style="text-align: center;display: block; width: 50%;margin: 0 auto;" method="post"><br>
+    <form class="form-group row" style="text-align: center;display: block; width: 30%;margin: 0 auto;" method="post"><br>
         <div class="form-group">
             <div class="fs-4 mb-3">
               <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-badge" viewBox="0 0 16 16">
@@ -24,7 +24,9 @@
 
         </div>
         <br>
-        <input class="btn btn-success w-25" type="submit" value="ADD STUDENT">
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <input class="btn btn-success btn-sm" type="submit" value="ADD STUDENT">
+        </div>
     </form>
 
 {% endblock %}
