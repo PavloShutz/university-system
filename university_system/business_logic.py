@@ -17,7 +17,7 @@ def _get_student_data_from_form(request: Request) -> tuple:
     return name, surname, age, address, group_id
 
 
-def _add_new_student(name: str, surname: str, age: int, address: str, group_id: int):
+def _add_new_student(name: str, surname: str, age: int, address: str, group_id: int) -> None:
     """Add new student to db if all data is not null."""
     if all((name, surname, age, address, group_id)):
         student = Student(
@@ -36,16 +36,16 @@ def _create_new_group(group_name: str) -> None:
         session.commit()
 
 
-def _get_available_groups() -> Iterable[list[Group]]:
+def _get_available_groups() -> Iterable[Group]:
     """Return all available groups for joining and manipulating."""
     return [group for group in session.query(Group).all()]
 
 
-def _get_data_about_group(group_name: str):
+def _get_data_about_group(group_name: str) -> Group:
     """Get group data from db by group name."""
     return session.query(Group).where(Group.group_name == group_name).first()
 
 
-def _get_students_from_group(group_name: str):
+def _get_students_from_group(group_name: str) -> Iterable[Student]:
     """Get students from db by group name."""
     return session.query(Student).where(Student.group == _get_data_about_group(group_name).id).all()

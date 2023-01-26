@@ -49,8 +49,7 @@ def show_table_of_students_in_group(group_name) -> str:
 def add_student_to_group() -> Union[str, Response]:
     """Render template with form to add new students."""
     if request.method == 'POST':
-        name, surname, age, address, group_id = _get_student_data_from_form(request)
-        _add_new_student(name, surname, age, address, group_id)
+        _add_new_student(*_get_student_data_from_form(request))
         return redirect("add_student")
     title = "Add student"
     return render_template("add_student.html", title=title, available_groups_to_join=_get_available_groups())
