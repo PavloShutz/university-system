@@ -1,3 +1,6 @@
+"""Describe group model for db"""
+
+
 from sqlalchemy import Column, Integer, String
 
 from .db_model import base

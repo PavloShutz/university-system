@@ -1,3 +1,6 @@
+"""All logic for the application here"""
+
+
 from typing import Iterable
 
 from flask import Request
@@ -44,7 +47,7 @@ def _create_new_group(group_name: str) -> None:
 
 def _get_available_groups() -> Iterable[Group]:
     """Return all available groups for joining and manipulating."""
-    return [group for group in session.query(Group).all()]
+    return list(group for group in session.query(Group).all())
 
 
 def _get_data_about_group(group_name: str) -> Group:

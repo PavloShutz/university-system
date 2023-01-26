@@ -1,3 +1,6 @@
+"""Describe student model for db"""
+
+
 from sqlalchemy import Column, Integer, String, ForeignKey
 
 from .db_model import base

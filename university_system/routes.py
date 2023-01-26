@@ -1,3 +1,6 @@
+"""All routes for university system"""
+
+
 from typing import Union
 
 from flask import render_template, request, redirect, Response

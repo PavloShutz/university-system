@@ -1,3 +1,6 @@
+"""Describes basic db model"""
+
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
@@ -12,4 +15,5 @@ base = declarative_base()
 
 
 def create_db():
+    """Initialize db"""
     base.metadata.create_all(db)

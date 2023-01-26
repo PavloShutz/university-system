@@ -2,25 +2,26 @@
 
 {% block content %}
 <br>
-<h2 align="center">Group "{{ group_name }}"</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Fullname</th>
-                <th scope="col">Age</th>
-                <th scope="col">Address</th>
+<h2 align="center">Group "{{ group_name }}"</h2><br>
+<table class="table table-dark table-hover table-bordered caption-top">
+    <caption>List of students</caption>
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Fullname</th>
+            <th scope="col">Age</th>
+            <th scope="col">Address</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        {% for index, student in enumerate(all_students_in_group, 1) %}
+            <tr class="table-success">
+                <th scope="row">{{ index }}</th>
+                <td>{{ student.surname}} {{ student.name }}</td>
+                <td>{{ student.age}}</td>
+                <td>{{ student.address}}</td>
             </tr>
-        </thead>
-        <tbody>
-            {% for index, student in enumerate(all_students_in_group, 1) %}
-                <tr>
-                    <th scope="row">{{ index }}</th>
-                    <td>{{ student.surname}} {{ student.name }}</td>
-                    <td>{{ student.age}}</td>
-                    <td>{{ student.address}}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
