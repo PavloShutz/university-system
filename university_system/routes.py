@@ -52,4 +52,8 @@ def add_student_to_group() -> Union[str, Response]:
         _add_new_student(*_get_student_data_from_form(request))
         return redirect("add_student")
     title = "Add student"
-    return render_template("add_student.html", title=title, available_groups_to_join=_get_available_groups())
+    return render_template(
+        "add_student.html",
+        title=title,
+        available_groups_to_join=_get_available_groups()
+        )

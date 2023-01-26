@@ -17,7 +17,13 @@ def _get_student_data_from_form(request: Request) -> tuple:
     return name, surname, age, address, group_id
 
 
-def _add_new_student(name: str, surname: str, age: int, address: str, group_id: int) -> None:
+def _add_new_student(
+    name: str,
+    surname: str,
+    age: int,
+    address: str,
+    group_id: int
+) -> None:
     """Add new student to db if all data is not null."""
     if all((name, surname, age, address, group_id)):
         student = Student(
@@ -48,4 +54,6 @@ def _get_data_about_group(group_name: str) -> Group:
 
 def _get_students_from_group(group_name: str) -> Iterable[Student]:
     """Get students from db by group name."""
-    return session.query(Student).where(Student.group == _get_data_about_group(group_name).id).all()
+    return session.query(Student).where(
+        Student.group == _get_data_about_group(group_name).id
+        ).all()
