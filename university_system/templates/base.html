@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    {% from 'bootstrap5/nav.html' import render_nav_item %}
+    {% from 'bootstrap5/utils.html' import render_messages %}
+
+    {% block styles %}
+        <!-- Bootstrap CSS -->
+        {{ bootstrap.load_css() }}
+    {% endblock %}
+
     <link rel="shortcut icon" href="https://cdn0.iconfinder.com/data/icons/elementary-school-flat-education-is-growth/512/Graduation-512.png">
+
     {% if title %}
         <title>{{ title }}</title>
     {% else %}
@@ -18,18 +25,25 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{ url_for('add_new_group') }}">Add group</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{ url_for('add_student_to_group') }}">Add student</a>
-                    </li>
-                </ul>
+            <div class="navbar-nav mr-auto">
+                {{ render_nav_item('add_new_group', 'Add group') }}
+                {{ render_nav_item('add_student_to_group', 'Add student') }}
+                {% if current_user.is_authenticated %}
+                    {{ render_nav_item('logout', 'Sign Out') }}
+                {% else %}
+                    {{ render_nav_item('signup', 'Sign Up') }}
+                    {{ render_nav_item('login', 'Sign In') }}
+                {% endif %}
             </div>
         </div>
     </nav>
+    {% block scripts %}
+        <!-- Optional JavaScript -->
+        {{ bootstrap.load_js() }}
+    {% endblock %}
+
+    {{ render_messages() }}
+
     {% block content %}{% endblock %}
 </body>
 </html>

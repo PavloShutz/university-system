@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block content %}
+
+<div style="margin: 0 auto;text-align: center;width: 80%;">
+  <br><h5>Sign in university system</h5><br>
+  {{ render_form(form, button_style='warning', render_kw={'style': 'width: 30%;display: inline-block;'}) }}
+</div>
+
+{% endblock %}
