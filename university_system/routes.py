@@ -84,7 +84,7 @@ def add_student_to_group() -> Union[str, Response]:
 def signup() -> Union[str, Response]:
     """Sign up new user to the university system."""
     form = SignupLoginForm()
-    if request.method == 'POST':
+    if form.validate_on_submit():
         username, password = _get_data_from_user_form(form)[:2]
         if _get_existing_user(username):
             flash(message="This user already exists.")
